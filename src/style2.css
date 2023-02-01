@@ -1,0 +1,161 @@
+/**
+ * Article: https://css-tricks.com/how-to-make-an-area-chart-with-css/
+ * More info: https://ChartsCSS.org/
+ */
+body {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 1vw;
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+}
+.form {
+  margin: 2vw 0;
+}
+.search {
+  display: flex;
+}
+
+.search i {
+  padding: 10px;
+  background: #385170;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+  transition: all 150ms ease-in-out;
+}
+
+.search i:hover {
+  cursor: pointer;
+}
+.current-weather {
+  padding: 2vw;
+  border: 1px solid#DEE2E6;
+  border-radius: 20px;
+  background: url(../imgs/cloudy.jpg) no-repeat center center fixed;
+  color: #385170;
+}
+.location i {
+  font-size: 2vw;
+}
+.city-name {
+  font-size: 2vw;
+  font-weight: 700;
+  padding-right: 7vw;
+  text-transform: capitalize;
+}
+
+.date-time {
+  padding-left: 7vw;
+  font-size: 1.5vw;
+}
+.temp-main {
+  transition: all 150ms ease-in-out;
+}
+.temp-main :hover {
+  cursor: pointer;
+}
+
+.main span {
+  font-size: 8vw;
+  padding-top: 4vw;
+}
+p.weather-mood {
+  font-size: 2vw;
+}
+.other {
+  padding-top: 2vw;
+}
+.temp-max-min {
+  padding: 4vw 0 0 0;
+}
+.temp {
+  margin-right: 2vw;
+  padding: 1vw;
+  border: 1px solid#DEE2E6;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.temp-title {
+  padding-left: 2vw;
+  font-size: 1.4vw;
+  font-weight: 600;
+}
+.area-chart {
+  /* Reset */
+  margin: 0;
+  padding-bottom: 0vw;
+  border: 0;
+
+  /* Dimensions */
+  width: 100%;
+  max-width: var(--chart-width, 30vw);
+  height: var(--chart-height, 15vw);
+
+  /* Layout */
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  flex-direction: row;
+}
+ul.area-chart,
+ol.area-chart {
+  list-style: none;
+}
+.area-chart > * {
+  /* Even size items */
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+
+  /* Color */
+  background: var(--color, rgba(55, 80, 111, 0.75));
+  clip-path: polygon(
+    0% calc(100% * (1 - var(--start))),
+    100% calc(100% * (1 - var(--end))),
+    100% 100%,
+    0% 100%
+  );
+}
+ul.time-values {
+  list-style: none;
+}
+.time-values li {
+  display: inline;
+  padding: 2vw;
+}
+
+.next-days {
+  margin-top: 2vw;
+  padding: 2vw;
+  border: 1px solid#DEE2E6;
+  border-radius: 20px;
+  background: #ececec;
+}
+.next-days p {
+  font-size: 2vw;
+}
+.next-days i {
+  font-size: 4vw;
+  color: #385170;
+}
+.temp-next-week {
+  padding-top: 1vw;
+}
+.line-1 {
+  height: 0.2vw;
+  width: 5.5vw;
+  background-color: #000;
+  float: left;
+  margin: 0.8vw 0.1vw;
+  padding: 0px;
+}
+.temp-next-week .min,
+.temp-next-week .max {
+  height: 2vw;
+  width: 2vw;
+  float: left;
+  margin: 0 0.1vw;
+  padding: 0px;
+}

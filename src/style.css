@@ -1,0 +1,55 @@
+header h1 {
+  color: #272044;
+  text-align: center;
+  font-family: Cerebri Sans, Helvetica, Arial, sans-serif;
+  margin: 120px 0 0 0;
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 48px;
+}
+section h2 {
+  color: #8064e9;
+  text-align: center;
+  font-family: Cerebri Sans, Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 48px;
+  margin: 0;
+  padding: 0 0 24px;
+}
+p {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: "Source Code Pro", monospace;
+  text-align: center;
+  padding-bottom: 37px;
+}
+button {
+  border-radius: 25px;
+  border: 1px solid #8064e9;
+  background: #8064e9;
+  color: #fff;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 16px 24px;
+  text-decoration: none;
+  transition: all 200ms ease;
+  box-shadow: rgb(37 39 89 / 8%) 0px 8px 8px 0;
+  font-family: Cerebri Sans, Helvetica, Arial, sans-serif;
+}
+button:hover {
+  cursor: pointer;
+  background: #5e41a7;
+}
+span {
+  font-weight: bold;
+}
+img {
+  display: block;
+  width: 40%;
+  margin: 30px auto;
+}
+
+footer .button-join {
+  text-align: center;
+}
