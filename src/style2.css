@@ -10,6 +10,10 @@ body {
   background-color: #fff;
   font-family: "Roboto", sans-serif;
 }
+footer {
+  font-size: small;
+  padding-top: 1vw;
+}
 .form {
   margin: 2vw 0;
 }
