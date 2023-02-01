@@ -1,3 +1,17 @@
+let weatherIcons = {
+  clearNight: "fa-solid fa-moon",
+  clearDay: "fa-solid fa-sun",
+  rainNight: "fa-solid fa-cloud-moon-rain",
+  rainDay: "fa-solid fa-cloud-sun-rain",
+  thunderstorm: "fa-solid fa-cloud-bolt",
+  drizzle: "fa-solid fa-cloud-rain",
+  snow: "fa-solid fa-snowflake",
+  atmosphere: "fa-solid fa-smog",
+  fewCloudsNight: "fa-solid fa-cloud-moon",
+  fewCloudsDay: "fa-solid fa-cloud-sun",
+  clouds: "fa-solid fa-cloud",
+};
+
 function convertTemperature(valueClass, unitClass, event) {
   let temp = document.querySelector(valueClass);
   console.log(temp.innerHTML);
@@ -111,39 +125,3 @@ q=${newName}&units=${units}&appid=${apiKey}`;
   let searchForm = document.querySelector(".search-form");
   searchForm.reset();
 });
-// let highTemp = document.querySelector(".high");
-// highTemp.addEventListener("click", (event) =>
-//   convertTemperature(".temp-value-2", ".unit-2", event)
-// );
-
-// let lowTemp = document.querySelector(".low");
-// lowTemp.addEventListener("click", convertTemperature("click", ".low"));
-
-// let feelsLikeTemp = document.querySelector(".feels-like");
-// feelsLikeTemp.addEventListener(
-//   "click",
-//   convertTemperature("click", ".feels-like")
-// );
-// let cityName = prompt("Enter a City");
-// cityName = cityName.toLowerCase();
-
-// if (cityName in weather) {
-//   //console.log(Math.round(weather[cityName].temp));
-//   //temp in ˚C
-//   let temp = Math.round(weather[cityName].temp);
-//   //temp in ˚F
-//   let tempF = Math.round(cToF(temp));
-//   //humidity
-//   let hum = weather[cityName].humidity;
-//   //capitalized city name
-//   cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
-
-//   alert(
-//     `It is currently ${temp}°C (${tempF}°F) in ${cityName} with a humidity of ${hum}%`
-//   );
-// } else {
-//   alert(
-//     `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+${cityName}`
-//   );
-// }
-//console.log(city);
