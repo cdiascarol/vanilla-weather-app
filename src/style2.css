@@ -34,45 +34,64 @@ footer {
   cursor: pointer;
 }
 .current-weather {
+  position: relative;
   padding: 2vw;
   border: 1px solid#DEE2E6;
   border-radius: 20px;
   background: url(../imgs/cloudy.jpg) no-repeat center center fixed;
   color: #385170;
 }
+.current-weather::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.location,
+.temp-avg,
+.other,
+.temp {
+  position: relative;
+  color: #385170;
+}
+
 .location i {
   font-size: 2vw;
 }
 .city-name {
   font-size: 2vw;
   font-weight: 700;
-  padding-right: 7vw;
   text-transform: capitalize;
 }
 
 .date-time {
-  padding-left: 7vw;
   font-size: 1.5vw;
 }
 .temp-main {
   transition: all 150ms ease-in-out;
+  text-align: center;
 }
 .temp-main :hover {
   cursor: pointer;
 }
 
 .main span {
-  font-size: 8vw;
+  font-size: 7vw;
   padding-top: 4vw;
 }
 p.weather-mood {
   font-size: 2vw;
+  text-transform: capitalize;
 }
 .other {
   padding-top: 2vw;
+  font-size: 1vw;
 }
 .temp-max-min {
-  padding: 4vw 0 0 0;
+  font-size: 1vw;
 }
 .temp {
   margin-right: 2vw;

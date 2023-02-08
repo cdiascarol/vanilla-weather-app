@@ -23,6 +23,10 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
   </head>
   <body>
     <div class="container">
@@ -42,79 +46,82 @@
       </div>
 
       <div class="current-weather">
-        <div class="row">
-          <div class="col-6">
-            <div class="location">
-              <div class="row align-items-center">
-                <div class="col-6 text-center">
-                  <span class="city-name">Montreal</span>
-                </div>
-                <div class="col-6 text-center">
-                  <span class="date-time">Today 9:49 PM</span>
-                </div>
-              </div>
-            </div>
-            <div class="temp-avg">
-              <div class="row">
-                <div class="col-4 offset-md-4 text-center">
-                  <div class="temp-main main">
-                    <span class="temp-value-1">1</span
-                    ><span class="unit-1">˚C</span>
+        <div class="current-weather-op">
+          <div class="row">
+            <div class="col-6">
+              <div class="location">
+                <div class="row align-items-center">
+                  <div class="col-6 text-left">
+                    <span class="city-name">Montreal</span>
                   </div>
-                  <p class="weather-mood">Cloudy</p>
-                </div>
-                <div class="col-4 text-center">
-                  <div class="temp-max-min">
-                    <div class="temp-main high">
-                      H: <span class="temp-value-2">1</span
-                      ><span class="unit-2">˚C</span>
-                    </div>
-                    <div class="temp-main low">
-                      L: <span class="temp-value-3">-5</span
-                      ><span class="unit-3">˚C</span>
-                    </div>
+                  <div class="col-6 text-end">
+                    <span class="date-time">Today 9:49 PM</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="other">
-              <div class="row">
-                <div class="col-4 text-center wind">
-                  <i class="fa-solid fa-wind"></i>
-                  <span id="wind">5</span><span>km/h</span>
+              <div class="temp-avg">
+                <div class="row align-items-center">
+                  <div class="col"></div>
+                  <div class="col-6 text-center">
+                    <div class="temp-main main">
+                      <span class="temp-value-1">1</span
+                      ><span class="unit-1">˚C</span>
+                    </div>
+                    <p class="weather-mood">Cloudy</p>
+                  </div>
+                  <div class="col text-center">
+                    <div class="temp-max-min">
+                      <div class="temp-main high">
+                        H: <span class="temp-value-2">1</span
+                        ><span class="unit-2">˚C</span>
+                      </div>
+                      <div class="temp-main low">
+                        L: <span class="temp-value-3">-5</span
+                        ><span class="unit-3">˚C</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-4 text-center hum">
-                  <i class="fa-solid fa-droplet"></i>
-                  <span id="hum">94</span><span>%</span>
-                </div>
-                <div class="col-4 text-center temp-main feels-like">
-                  <i class="fa-solid fa-temperature-high"></i>
-                  <span
-                    >Feels like <span class="temp-value-4">-2</span
-                    ><span class="unit-4">˚C</span></span
-                  >
+              </div>
+              <div class="other">
+                <div class="row">
+                  <div class="col-4 text-center wind">
+                    <i class="fa-solid fa-wind"></i>
+                    <span id="wind">5</span><span>km/h</span>
+                  </div>
+                  <div class="col-4 text-center hum">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span id="hum">94</span><span>%</span>
+                  </div>
+                  <div class="col-4 text-center temp-main feels-like">
+                    <i class="fa-solid fa-temperature-high"></i>
+                    <span
+                      >Feels like <span class="temp-value-4">-2</span
+                      ><span class="unit-4">˚C</span></span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col offset-md-1 align-items-center temp">
-            <div class="row temp-title">Temperature</div>
-            <div class="row d-flex justify-content-center">
-              <ul class="area-chart">
-                <li style="--start: 0.4; --end: 0.5">-3˚C</li>
-                <li style="--start: 0.5; --end: 0.7">1˚C</li>
-                <li style="--start: 0.7; --end: 0.3">-5˚C</li>
-                <li style="--start: 0.3; --end: 0.4">-4˚C</li>
-                <li style="--start: 0.4; --end: 0.4">-4˚C</li>
-              </ul>
-            </div>
-            <div class="row align-items-end text-center">
-              <ul class="time-values">
-                <li>8AM</li>
-                <li>12PM</li>
-                <li>4PM</li>
-                <li>8PM</li>
-              </ul>
+            <div class="col offset-md-1 align-items-center temp">
+              <div class="row temp-title">Temperature</div>
+              <div class="row d-flex justify-content-center">
+                <ul class="area-chart">
+                  <li style="--start: 0.4; --end: 0.5">-3˚C</li>
+                  <li style="--start: 0.5; --end: 0.7">1˚C</li>
+                  <li style="--start: 0.7; --end: 0.3">-5˚C</li>
+                  <li style="--start: 0.3; --end: 0.4">-4˚C</li>
+                  <li style="--start: 0.4; --end: 0.4">-4˚C</li>
+                </ul>
+              </div>
+              <div class="row align-items-end text-center">
+                <ul class="time-values">
+                  <li>8AM</li>
+                  <li>12PM</li>
+                  <li>4PM</li>
+                  <li>8PM</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

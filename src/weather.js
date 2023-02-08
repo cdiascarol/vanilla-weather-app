@@ -12,6 +12,20 @@ let weatherIcons = {
   clouds: "fa-solid fa-cloud",
 };
 
+let weatherBackgroudImages = {
+  clearNight: "clearsky_night.jpg",
+  clearDay: "clearsky_day.jpg",
+  rainNight: "rainy_night.jpg",
+  rainDay: "rainy_day.jpg",
+  thunderstorm: "thunderstorm.jpg",
+  drizzle: "drizzle.jpg",
+  snow: "snow.jpg",
+  atmosphere: "atmosphere.jpg",
+  fewCloudsNight: "clouds_night.jpg",
+  fewCloudsDay: "clouds_day.jpg",
+  clouds: "cloudy.jpg",
+};
+
 function convertTemperature(valueClass, unitClass, event) {
   let temp = document.querySelector(valueClass);
   console.log(temp.innerHTML);
@@ -39,21 +53,32 @@ function changeCityName(event) {
   cityName.innerHTML = newName;
   searchForm.reset();
 }
-let dateObject = new Date();
-let weekDays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
-let currentDate = document.querySelector(".date-time");
-currentDate.innerHTML = `${
-  weekDays[dateObject.getDay()]
-} ${dateObject.getHours()}:${dateObject.getMinutes()} `;
+function formatDate() {
+  let date = new Date();
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+  let formatedDate = `${day} ${hours}:${minutes}`;
+  document.querySelector(".date-time").innerHTML = formatedDate;
+  setTimeout(formatDate, 1000);
+}
 
 let tempUnit = document.querySelectorAll(".temp-main");
 tempUnit.forEach((temp) => {
@@ -64,18 +89,43 @@ tempUnit.forEach((temp) => {
     convertTemperature(".temp-value-4", ".unit-4", event);
   });
 });
-
+function setBackgroundImage(description) {
+  currentWeatherElement = document.querySelector(".current-weather");
+  currentWeatherElement.style.backgroundRepeat = "no-repeat";
+  currentWeatherElement.style.backgroundPosition = "center";
+  currentWeatherElement.style.backgroundAttachment = "fixed";
+  currentWeatherElement.style.backgroundSize = "cover";
+  switch (description.toLowerCase()) {
+    case "clouds":
+      currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
+      break;
+    case "rain":
+      currentWeatherElement.style.backgroundImage =
+        "url(../imgs/rainy_day.jpg)";
+      break;
+    case "clear":
+      currentWeatherElement.style.backgroundImage =
+        "url(../imgs/clearsky_day.jpg)";
+      break;
+    case "drizzle":
+      currentWeatherElement.style.backgroundImage = "url(../imgs/drizzle.jpg)";
+      break;
+    case "thunderstorm":
+      currentWeatherElement.style.backgroundImage =
+        "url(../imgs/thunderstorm.jpg)";
+      break;
+    case "mist":
+      currentWeatherElement.style.backgroundImage =
+        "url(../imgs/atmosphere.jpg)";
+      break;
+    case "snow":
+      currentWeatherElement.style.backgroundImage = "url(../imgs/snow.jpg)";
+      break;
+    default:
+      currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
+  }
+}
 function showCurrentTemperature(response) {
-  let temp = Math.round(response.data.main.temp);
-  let high = Math.round(response.data.main.temp_max);
-  let low = Math.round(response.data.main.temp_min);
-  let wind = Math.round(response.data.wind.speed);
-  let hum = Math.round(response.data.main.humidity);
-  let feels_like = Math.round(response.data.main.feels_like);
-  let description = response.data.weather[0].main;
-
-  let cityName = response.data.name;
-
   let tempElement = document.querySelector(".temp-value-1");
   let highElement = document.querySelector(".temp-value-2");
   let lowElement = document.querySelector(".temp-value-3");
@@ -87,14 +137,18 @@ function showCurrentTemperature(response) {
 
   console.log(response.data);
 
-  tempElement.innerHTML = temp;
-  highElement.innerHTML = high;
-  lowElement.innerHTML = low;
-  windElement.innerHTML = wind;
-  humElement.innerHTML = hum;
-  feelsElement.innerHTML = feels_like;
-  descriptionElement.innerHTML = description;
-  cityNameElement.innerHTML = cityName;
+  tempElement.innerHTML = Math.round(response.data.main.temp);
+  highElement.innerHTML = Math.round(response.data.main.temp_max);
+  lowElement.innerHTML = Math.round(response.data.main.temp_min);
+  windElement.innerHTML = Math.round(response.data.wind.speed);
+  humElement.innerHTML = Math.round(response.data.main.humidity);
+  feelsElement.innerHTML = Math.round(response.data.main.feels_like);
+  descriptionElement.innerHTML = response.data.weather[0].description;
+  cityNameElement.innerHTML = response.data.name;
+
+  let broadDescription = response.data.weather[0].main;
+
+  setBackgroundImage(broadDescription);
 }
 
 function getPosition(position) {
@@ -125,3 +179,14 @@ q=${newName}&units=${units}&appid=${apiKey}`;
   let searchForm = document.querySelector(".search-form");
   searchForm.reset();
 });
+formatDate();
+
+function defaultCity(city) {
+  let apiKey = "a5acb752426cd8188485c35694980e3a";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?
+q=${city}&units=${units}&appid=${apiKey}`;
+  axios.get(apiUrl).then(showCurrentTemperature);
+}
+defaultCity("Montreal");
+navigator.geolocation.getCurrentPosition(getPosition);
