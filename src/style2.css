@@ -149,22 +149,24 @@ ul.time-values {
   padding: 2vw;
 }
 
-.next-days {
+.weather-forecast {
   margin-top: 2vw;
   padding: 2vw;
   border: 1px solid#DEE2E6;
   border-radius: 20px;
   background: #ececec;
 }
-.next-days p {
+.weather-forecast p {
   font-size: 2vw;
 }
-.next-days i {
+.weather-forecast i {
   font-size: 4vw;
   color: #385170;
 }
-.temp-next-week {
+.weather-forecast-temperature {
   padding-top: 1vw;
+  text-align: center;
+  font-size: 1.3vw;
 }
 .line-1 {
   height: 0.2vw;
@@ -174,11 +176,12 @@ ul.time-values {
   margin: 0.8vw 0.1vw;
   padding: 0px;
 }
-.temp-next-week .min,
-.temp-next-week .max {
-  height: 2vw;
-  width: 2vw;
-  float: left;
-  margin: 0 0.1vw;
+.weather-forecast-temperature-min,
+.weather-forecast-temperature-max {
+  margin: 0 0.2vw;
   padding: 0px;
+}
+
+.weather-forecast-temperature-max {
+  font-weight: 700;
 }

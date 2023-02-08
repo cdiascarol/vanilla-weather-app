@@ -151,6 +151,27 @@ function showCurrentTemperature(response) {
   setBackgroundImage(broadDescription);
 }
 
+function getHourlyForecast(response) {}
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastContent = `<div class="row">`;
+
+  forecastContent =
+    forecastContent +
+    `<div class="col-2 text-center">
+            <p>Sat</p>
+            <i class="fa-solid fa-cloud"></i>
+            <div class="weather-forecast-temperature">
+              <span class="weather-forecast-temperature-max">2˚</span>
+              <span class="weather-forecast-temperature-min">-2˚</span>
+            </div>
+          </div>`;
+
+  forecastContent = forecastContent + `</div>`;
+
+  forecastElement.innerHTML = forecastContent;
+}
 function getPosition(position) {
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
@@ -190,3 +211,31 @@ q=${city}&units=${units}&appid=${apiKey}`;
 }
 defaultCity("Montreal");
 navigator.geolocation.getCurrentPosition(getPosition);
+
+function setHourlyForecast() {
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Year", "Sales", "Expenses"],
+      ["2013", 1000, 400],
+      ["2014", 1170, 460],
+      ["2015", 660, 1120],
+      ["2016", 1030, 540],
+    ]);
+
+    var options = {
+      title: "Company Performance",
+      hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
+      vAxis: { minValue: 0 },
+    };
+
+    var chart = new google.visualization.AreaChart(
+      document.getElementById("chart_div")
+    );
+    chart.draw(data, options);
+  }
+}
+
+displayForecast();
