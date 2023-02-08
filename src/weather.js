@@ -90,7 +90,7 @@ tempUnit.forEach((temp) => {
   });
 });
 function setBackgroundImage(description) {
-  currentWeatherElement = document.querySelector(".current-weather");
+  let currentWeatherElement = document.querySelector(".current-weather");
   currentWeatherElement.style.backgroundRepeat = "no-repeat";
   currentWeatherElement.style.backgroundPosition = "center";
   currentWeatherElement.style.backgroundAttachment = "fixed";
@@ -125,6 +125,13 @@ function setBackgroundImage(description) {
       currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
   }
 }
+function getForecast(coords) {
+  let apiKey = "a5acb752426cd8188485c35694980e3a";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?
+lat=${coords.lat}&lon=${coords.lon}&units=${units}&appid=${apiKey}`;
+  axios.get(apiUrl).then(displayForecast);
+}
 function showCurrentTemperature(response) {
   let tempElement = document.querySelector(".temp-value-1");
   let highElement = document.querySelector(".temp-value-2");
@@ -149,25 +156,65 @@ function showCurrentTemperature(response) {
   let broadDescription = response.data.weather[0].main;
 
   setBackgroundImage(broadDescription);
+
+  getForecast(response.data.coord);
 }
 
 function getHourlyForecast(response) {}
-function displayForecast() {
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+function setForecastIcon(description, sunrise, sunset) {
+  console.log(sunrise, sunset);
+  switch (description.toLowerCase()) {
+    case "clouds":
+      return weatherIcons.clouds;
+    case "rain":
+      return weatherIcons.rainDay;
+    case "clear":
+      return weatherIcons.clearDay;
+    case "drizzle":
+      return weatherIcons.drizzle;
+    case "thunderstorm":
+      return weatherIcons.thunderstorm;
+    case "mist":
+      return weatherIcons.atmosphere;
+    case "snow":
+      return weatherIcons.snow;
+    default:
+      return weatherIcons.clearDay;
+  }
+}
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
   let forecastContent = `<div class="row">`;
 
-  forecastContent =
-    forecastContent +
-    `<div class="col-2 text-center">
-            <p>Sat</p>
-            <i class="fa-solid fa-cloud"></i>
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      console.log(forecastDay.weather[0].main);
+      forecastContent =
+        forecastContent +
+        `<div class="col-2 text-center">
+            <p>${formatDay(forecastDay.dt)}</p>
+            <i class="${setForecastIcon(forecastDay.weather[0].main)}"></i>
             <div class="weather-forecast-temperature">
-              <span class="weather-forecast-temperature-max">2˚</span>
-              <span class="weather-forecast-temperature-min">-2˚</span>
+              <span class="weather-forecast-temperature-max">${Math.round(
+                forecastDay.temp.max
+              )}˚</span>
+              <span class="weather-forecast-temperature-min">${Math.round(
+                forecastDay.temp.min
+              )}˚</span>
             </div>
           </div>`;
-
+    }
+  });
   forecastContent = forecastContent + `</div>`;
 
   forecastElement.innerHTML = forecastContent;
@@ -237,5 +284,3 @@ function setHourlyForecast() {
     chart.draw(data, options);
   }
 }
-
-displayForecast();
