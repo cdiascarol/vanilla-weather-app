@@ -23,10 +23,9 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://www.gstatic.com/charts/loader.js"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   </head>
   <body>
     <div class="container">
@@ -103,9 +102,15 @@
                 </div>
               </div>
             </div>
-            <div class="col offset-md-1 align-items-center temp">
-              <div class="row temp-title">Temperature</div>
-              <div class="row d-flex justify-content-center">
+            <div
+              class="col offset-md-1 align-items-center hourly-forecast"
+              id="hourly-forecast"
+            >
+              <div class="row hourly-forecast-title">Temperature</div>
+              <div class="row" id="chart-container">
+                <canvas id="hourly-forecast-chart"></canvas>
+              </div>
+              <!-- <div class="row d-flex justify-content-center">
                 <ul class="area-chart">
                   <li style="--start: 0.4; --end: 0.5">-3˚C</li>
                   <li style="--start: 0.5; --end: 0.7">1˚C</li>
@@ -121,7 +126,7 @@
                   <li>4PM</li>
                   <li>8PM</li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

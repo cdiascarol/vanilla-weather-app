@@ -125,52 +125,7 @@ function setBackgroundImage(description) {
       currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
   }
 }
-function getForecast(coords) {
-  let apiKey = "a5acb752426cd8188485c35694980e3a";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?
-lat=${coords.lat}&lon=${coords.lon}&units=${units}&appid=${apiKey}`;
-  axios.get(apiUrl).then(displayForecast);
-}
-function showCurrentTemperature(response) {
-  let tempElement = document.querySelector(".temp-value-1");
-  let highElement = document.querySelector(".temp-value-2");
-  let lowElement = document.querySelector(".temp-value-3");
-  let windElement = document.querySelector("#wind");
-  let humElement = document.querySelector("#hum");
-  let feelsElement = document.querySelector(".temp-value-4");
-  let descriptionElement = document.querySelector(".weather-mood");
-  let cityNameElement = document.querySelector(".city-name");
-
-  console.log(response.data);
-
-  tempElement.innerHTML = Math.round(response.data.main.temp);
-  highElement.innerHTML = Math.round(response.data.main.temp_max);
-  lowElement.innerHTML = Math.round(response.data.main.temp_min);
-  windElement.innerHTML = Math.round(response.data.wind.speed);
-  humElement.innerHTML = Math.round(response.data.main.humidity);
-  feelsElement.innerHTML = Math.round(response.data.main.feels_like);
-  descriptionElement.innerHTML = response.data.weather[0].description;
-  cityNameElement.innerHTML = response.data.name;
-
-  let broadDescription = response.data.weather[0].main;
-
-  setBackgroundImage(broadDescription);
-
-  getForecast(response.data.coord);
-}
-
-function getHourlyForecast(response) {}
-
-function formatDay(timestamp) {
-  let date = new Date(timestamp * 1000);
-  let day = date.getDay();
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-  return days[day];
-}
-function setForecastIcon(description, sunrise, sunset) {
-  console.log(sunrise, sunset);
+function setForecastIcon(description) {
   switch (description.toLowerCase()) {
     case "clouds":
       return weatherIcons.clouds;
@@ -184,14 +139,30 @@ function setForecastIcon(description, sunrise, sunset) {
       return weatherIcons.thunderstorm;
     case "mist":
       return weatherIcons.atmosphere;
+    case "smoke":
+      return weatherIcons.atmosphere;
+    case "haze":
+      return weatherIcons.atmosphere;
+    case "dust":
+      return weatherIcons.atmosphere;
+    case "sand":
+      return weatherIcons.atmosphere;
+    case "fog":
+      return weatherIcons.atmosphere;
+    case "ash":
+      return weatherIcons.atmosphere;
+    case "squall":
+      return weatherIcons.atmosphere;
+    case "tornado":
+      return weatherIcons.atmosphere;
     case "snow":
       return weatherIcons.snow;
     default:
       return weatherIcons.clearDay;
   }
 }
-function displayForecast(response) {
-  let forecast = response.data.daily;
+
+function setForecast(forecast) {
   let forecastElement = document.querySelector("#forecast");
 
   let forecastContent = `<div class="row">`;
@@ -219,6 +190,144 @@ function displayForecast(response) {
 
   forecastElement.innerHTML = forecastContent;
 }
+function setHourlyForecast(hourlyForecast) {
+  console.log(hourlyForecast);
+  console.log(formatHour(hourlyForecast[0].dt));
+
+  Chart.register(ChartDataLabels);
+  let chartStatus = Chart.getChart("hourly-forecast-chart"); // <canvas> id
+  if (chartStatus != undefined) {
+    chartStatus.destroy();
+  }
+  const ctx = document.getElementById("hourly-forecast-chart");
+  console.log(ctx);
+  let dataset = [
+    Math.round(hourlyForecast[0].temp),
+    Math.round(hourlyForecast[3].temp),
+    Math.round(hourlyForecast[6].temp),
+    Math.round(hourlyForecast[9].temp),
+    Math.round(hourlyForecast[12].temp),
+    Math.round(hourlyForecast[15].temp),
+  ];
+  var lineChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: [
+        `${formatHour(hourlyForecast[0].dt)}:00`,
+        `${formatHour(hourlyForecast[3].dt)}:00`,
+        `${formatHour(hourlyForecast[6].dt)}:00`,
+        `${formatHour(hourlyForecast[9].dt)}:00`,
+        `${formatHour(hourlyForecast[12].dt)}:00`,
+        `${formatHour(hourlyForecast[15].dt)}:00`,
+      ],
+      datasets: [
+        {
+          label: "˚C",
+          data: dataset,
+          borderWidth: 1,
+          fill: false,
+          borderColor: "rgb(55, 80, 111)",
+          tension: 0.4,
+          pointBackgroundColor: "rgb(55, 80, 111)",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+        y: {
+          display: false,
+          grid: {
+            display: false,
+            beginAtZero: false,
+          },
+          min: Math.min(...dataset) - 2,
+          max: Math.max(...dataset) + 1,
+        },
+      },
+      maintainAspectRatio: true,
+      responsive: true,
+      title: {
+        display: true,
+        text: " ",
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        datalabels: {
+          anchor: "start",
+          offset: 2,
+          align: "top",
+          clamp: "true",
+          font: {
+            weight: "bold",
+          },
+          color: "#385170",
+        },
+      },
+    },
+  });
+}
+function displayForecast(response) {
+  let forecast = response.data.daily;
+
+  let hourlyForecast = response.data.hourly;
+  setForecast(forecast);
+  setHourlyForecast(hourlyForecast);
+}
+function getForecast(coords) {
+  let apiKey = "a5acb752426cd8188485c35694980e3a";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?
+lat=${coords.lat}&lon=${coords.lon}&units=${units}&appid=${apiKey}`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function showCurrentTemperature(response) {
+  let tempElement = document.querySelector(".temp-value-1");
+  let highElement = document.querySelector(".temp-value-2");
+  let lowElement = document.querySelector(".temp-value-3");
+  let windElement = document.querySelector("#wind");
+  let humElement = document.querySelector("#hum");
+  let feelsElement = document.querySelector(".temp-value-4");
+  let descriptionElement = document.querySelector(".weather-mood");
+  let cityNameElement = document.querySelector(".city-name");
+
+  tempElement.innerHTML = Math.round(response.data.main.temp);
+  highElement.innerHTML = Math.round(response.data.main.temp_max);
+  lowElement.innerHTML = Math.round(response.data.main.temp_min);
+  windElement.innerHTML = Math.round(response.data.wind.speed);
+  humElement.innerHTML = Math.round(response.data.main.humidity);
+  feelsElement.innerHTML = Math.round(response.data.main.feels_like);
+  descriptionElement.innerHTML = response.data.weather[0].description;
+  cityNameElement.innerHTML = response.data.name;
+
+  let broadDescription = response.data.weather[0].main;
+
+  setBackgroundImage(broadDescription);
+
+  getForecast(response.data.coord);
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+function formatHour(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let hours = date.getHours();
+
+  return hours;
+}
+
 function getPosition(position) {
   let lat = position.coords.latitude;
   let lon = position.coords.longitude;
@@ -258,29 +367,3 @@ q=${city}&units=${units}&appid=${apiKey}`;
 }
 defaultCity("Montreal");
 navigator.geolocation.getCurrentPosition(getPosition);
-
-function setHourlyForecast() {
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ["Year", "Sales", "Expenses"],
-      ["2013", 1000, 400],
-      ["2014", 1170, 460],
-      ["2015", 660, 1120],
-      ["2016", 1030, 540],
-    ]);
-
-    var options = {
-      title: "Company Performance",
-      hAxis: { title: "Year", titleTextStyle: { color: "#333" } },
-      vAxis: { minValue: 0 },
-    };
-
-    var chart = new google.visualization.AreaChart(
-      document.getElementById("chart_div")
-    );
-    chart.draw(data, options);
-  }
-}

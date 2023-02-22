@@ -28,10 +28,15 @@ footer {
   min-width: 50px;
   text-align: center;
   transition: all 150ms ease-in-out;
+  border-radius: 0 10px 10px 0;
 }
 
 .search i:hover {
   cursor: pointer;
+}
+
+.form-control {
+  border-radius: 10px 0 0 10px;
 }
 .current-weather {
   position: relative;
@@ -53,7 +58,7 @@ footer {
 .location,
 .temp-avg,
 .other,
-.temp {
+.hourly-forecast {
   position: relative;
   color: #385170;
 }
@@ -93,17 +98,20 @@ p.weather-mood {
 .temp-max-min {
   font-size: 1vw;
 }
-.temp {
+.hourly-forecast {
   margin-right: 2vw;
+
   padding: 1vw;
-  border: 1px solid#DEE2E6;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.3);
+  /* border: 1px solid#DEE2E6; */
+  /* border-radius: 20px;
+  background: rgba(255, 255, 255, 1); */
 }
-.temp-title {
+.hourly-forecast-title {
   padding-left: 2vw;
+  margin-bottom: 2vw;
   font-size: 1.4vw;
   font-weight: 600;
+  color: #385170;
 }
 .area-chart {
   /* Reset */
@@ -133,7 +141,7 @@ ol.area-chart {
   flex-basis: 0;
 
   /* Color */
-  background: var(--color, rgba(55, 80, 111, 0.75));
+  background: var(--color, rgba(55, 80, 111, 1));
   clip-path: polygon(
     0% calc(100% * (1 - var(--start))),
     100% calc(100% * (1 - var(--end))),
