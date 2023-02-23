@@ -1,48 +1,3 @@
-let weatherIcons = {
-  clearNight: "fa-solid fa-moon",
-  clearDay: "fa-solid fa-sun",
-  rainNight: "fa-solid fa-cloud-moon-rain",
-  rainDay: "fa-solid fa-cloud-sun-rain",
-  thunderstorm: "fa-solid fa-cloud-bolt",
-  drizzle: "fa-solid fa-cloud-rain",
-  snow: "fa-solid fa-snowflake",
-  atmosphere: "fa-solid fa-smog",
-  fewCloudsNight: "fa-solid fa-cloud-moon",
-  fewCloudsDay: "fa-solid fa-cloud-sun",
-  clouds: "fa-solid fa-cloud",
-};
-
-function convertCurrentTemperature(valueClass, unitClass, event) {
-  let temp = document.querySelector(valueClass);
-  let unit = document.querySelector(unitClass);
-
-  if (unit.innerHTML === "˚C") {
-    let frh = Math.round((temp.innerHTML * 9) / 5 + 32);
-    console.log(frh);
-    temp.innerHTML = frh;
-    unit.innerHTML = "˚F";
-  } else {
-    let cel = Math.round(((temp.innerHTML - 32) * 5) / 9);
-    console.log(cel);
-    temp.innerHTML = cel;
-    unit.innerHTML = "˚C";
-  }
-}
-
-function convertForecastTemperature(valueClass, event) {
-  let unit = document.querySelector(unitClass);
-}
-
-function changeCityName(event) {
-  event.preventDefault();
-  let cityInput = document.querySelector("#city-input");
-  let cityName = document.querySelector(".city-name");
-  let searchForm = document.querySelector(".search-form");
-  let newName = cityInput.value.trim();
-  cityName.innerHTML = newName;
-  searchForm.reset();
-}
-
 function formatDate() {
   let date = new Date();
   let hours = date.getHours();
@@ -69,21 +24,11 @@ function formatDate() {
   setTimeout(formatDate, 1000);
 }
 
-let tempUnit = document.querySelectorAll(".temp-main");
-tempUnit.forEach((temp) => {
-  temp.addEventListener("click", (event) => {
-    convertTemperature(".temp-value-1", ".unit-1", event);
-    convertTemperature(".temp-value-2", ".unit-2", event);
-    convertTemperature(".temp-value-3", ".unit-3", event);
-    convertTemperature(".temp-value-4", ".unit-4", event);
-  });
-});
-
 function setBackgroundGradient(description) {
   let weatherBackgroudGradients = {
     clear:
       "linear-gradient(179.1deg, rgb(247, 238, 238) -1.9%, rgb(247, 202, 201) 44.9%, rgb(145, 168, 208) 96.1%)",
-    rain: "linear-gradient(89.4deg, rgb(74, 77, 103) -4.3%, rgb(119, 125, 165) 102.1%)",
+    rain: "linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%)",
     snow: "radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%)",
     atmosphere:
       "radial-gradient(666px at 0.4% 48%, rgb(202, 204, 227) 0%, rgb(89, 89, 99) 97.5%)",
@@ -143,6 +88,19 @@ function setBackgroundGradient(description) {
 }
 
 function setForecastIcon(description) {
+  let weatherIcons = {
+    clearNight: "fa-solid fa-moon",
+    clearDay: "fa-solid fa-sun",
+    rainNight: "fa-solid fa-cloud-moon-rain",
+    rainDay: "fa-solid fa-cloud-sun-rain",
+    thunderstorm: "fa-solid fa-cloud-bolt",
+    drizzle: "fa-solid fa-cloud-rain",
+    snow: "fa-solid fa-snowflake",
+    atmosphere: "fa-solid fa-smog",
+    fewCloudsNight: "fa-solid fa-cloud-moon",
+    fewCloudsDay: "fa-solid fa-cloud-sun",
+    clouds: "fa-solid fa-cloud",
+  };
   switch (description.toLowerCase()) {
     case "clouds":
       return weatherIcons.clouds;
@@ -190,8 +148,10 @@ function setForecast(forecast) {
       forecastContent =
         forecastContent +
         `<div class="col-2 text-center">
-            <p>${formatDay(forecastDay.dt)}</p>
-            <i class="${setForecastIcon(forecastDay.weather[0].main)}"></i>
+            <p class="weather-forecast-day">${formatDay(forecastDay.dt)}</p>
+            <i class="${setForecastIcon(
+              forecastDay.weather[0].main
+            )} weather-forecast-i"></i>
             <div class="weather-forecast-temperature">
               <span class="weather-forecast-temperature-max">${Math.round(
                 forecastDay.temp.max
@@ -290,6 +250,7 @@ function setHourlyForecast(hourlyForecast) {
     },
   });
 }
+
 function displayForecast(response) {
   let forecast = response.data.daily;
 
@@ -314,7 +275,7 @@ function showCurrentTemperature(response) {
   let feelsElement = document.querySelector(".temp-value-4");
   let descriptionElement = document.querySelector(".weather-mood");
   let cityNameElement = document.querySelector(".city-name");
-
+  console.log(response);
   tempElement.innerHTML = Math.round(response.data.main.temp);
   highElement.innerHTML = Math.round(response.data.main.temp_max);
   lowElement.innerHTML = Math.round(response.data.main.temp_min);
@@ -322,7 +283,7 @@ function showCurrentTemperature(response) {
   humElement.innerHTML = Math.round(response.data.main.humidity);
   feelsElement.innerHTML = Math.round(response.data.main.feels_like);
   descriptionElement.innerHTML = response.data.weather[0].description;
-  cityNameElement.innerHTML = response.data.name;
+  cityNameElement.innerHTML = `${response.data.name}, ${response.data.sys.country}`;
 
   let broadDescription = response.data.weather[0].main;
 
@@ -354,33 +315,33 @@ function getPosition(position) {
 lat=${lat}&lon=${lon}&units=${units}&appid=${apiKey}`;
   axios.get(apiUrl).then(showCurrentTemperature);
 }
-let currentLocationIcon = document.querySelector("#current-location");
+
 function clickIcon() {
   navigator.geolocation.getCurrentPosition(getPosition);
 }
-currentLocationIcon.addEventListener("click", clickIcon);
 
-let searchForm = document.querySelector(".search-form");
-searchForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  let cityInput = document.querySelector("#city-input");
-  let newName = cityInput.value.trim();
-  let apiKey = "a5acb752426cd8188485c35694980e3a";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?
-q=${newName}&units=${units}&appid=${apiKey}`;
-  axios.get(apiUrl).then(showCurrentTemperature);
-  let searchForm = document.querySelector(".search-form");
-  searchForm.reset();
-});
-formatDate();
-
-function defaultCity(city) {
-  let apiKey = "a5acb752426cd8188485c35694980e3a";
-  let units = "metric";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?
-q=${city}&units=${units}&appid=${apiKey}`;
+function search(city) {
+  let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(showCurrentTemperature);
 }
-defaultCity("Montreal");
-navigator.geolocation.getCurrentPosition(getPosition);
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+  form.reset();
+}
+
+function clickIcon() {
+  navigator.geolocation.getCurrentPosition(getPosition);
+}
+
+let currentLocationIcon = document.querySelector("#current-location");
+currentLocationIcon.addEventListener("click", clickIcon);
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+search("New York");
+formatDate();

@@ -30,9 +30,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <div class="form">
-        <form class="form-group search-form">
+        <form class="form-group search-form" id="search-form">
           <div class="search">
             <input
               type="text"
@@ -112,23 +112,6 @@
               <div class="row" id="chart-container">
                 <canvas id="hourly-forecast-chart"></canvas>
               </div>
-              <!-- <div class="row d-flex justify-content-center">
-                <ul class="area-chart">
-                  <li style="--start: 0.4; --end: 0.5">-3˚C</li>
-                  <li style="--start: 0.5; --end: 0.7">1˚C</li>
-                  <li style="--start: 0.7; --end: 0.3">-5˚C</li>
-                  <li style="--start: 0.3; --end: 0.4">-4˚C</li>
-                  <li style="--start: 0.4; --end: 0.4">-4˚C</li>
-                </ul>
-              </div>
-              <div class="row align-items-end text-center">
-                <ul class="time-values">
-                  <li>8AM</li>
-                  <li>12PM</li>
-                  <li>4PM</li>
-                  <li>8PM</li>
-                </ul>
-              </div> -->
             </div>
           </div>
         </div>

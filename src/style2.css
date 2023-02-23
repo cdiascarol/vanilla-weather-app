@@ -2,7 +2,7 @@ body {
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 1vw;
+  padding: 3vw;
   font-family: "Poppins", sans-serif;
 }
 footer {
@@ -10,9 +10,7 @@ footer {
   padding-top: 1vw;
   color: #000;
 }
-.form {
-  margin: 2vw 0;
-}
+
 .search {
   display: flex;
 }
@@ -38,26 +36,17 @@ footer {
 .current-weather {
   position: relative;
   padding: 2vw;
-  /* border: 1px solid#DEE2E6; */
   border-radius: 20px;
-  /* background: url(../imgs/cloudy.jpg) no-repeat center center fixed; */
 }
-/* .current-weather::before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-} */
+
 .location,
 .temp-avg,
 .other,
-.hourly-forecast {
+.hourly-forecast,
+.weather-forecast-temperature,
+.weather-forecast-day,
+.weather-forecast-i {
   position: relative;
-  /* color: #385170; */
   color: #163172;
 }
 
@@ -99,9 +88,6 @@ p.weather-mood {
 .hourly-forecast {
   margin-right: 2vw;
   padding: 1vw;
-  /* border: 1px solid#DEE2E6; */
-  /* border-radius: 20px;
-  background: rgba(255, 255, 255, 1); */
 }
 .hourly-forecast-title {
   padding-left: 2vw;
