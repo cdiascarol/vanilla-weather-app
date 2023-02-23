@@ -12,23 +12,8 @@ let weatherIcons = {
   clouds: "fa-solid fa-cloud",
 };
 
-let weatherBackgroudImages = {
-  clearNight: "clearsky_night.jpg",
-  clearDay: "clearsky_day.jpg",
-  rainNight: "rainy_night.jpg",
-  rainDay: "rainy_day.jpg",
-  thunderstorm: "thunderstorm.jpg",
-  drizzle: "drizzle.jpg",
-  snow: "snow.jpg",
-  atmosphere: "atmosphere.jpg",
-  fewCloudsNight: "clouds_night.jpg",
-  fewCloudsDay: "clouds_day.jpg",
-  clouds: "cloudy.jpg",
-};
-
-function convertTemperature(valueClass, unitClass, event) {
+function convertCurrentTemperature(valueClass, unitClass, event) {
   let temp = document.querySelector(valueClass);
-  console.log(temp.innerHTML);
   let unit = document.querySelector(unitClass);
 
   if (unit.innerHTML === "˚C") {
@@ -42,6 +27,10 @@ function convertTemperature(valueClass, unitClass, event) {
     temp.innerHTML = cel;
     unit.innerHTML = "˚C";
   }
+}
+
+function convertForecastTemperature(valueClass, event) {
+  let unit = document.querySelector(unitClass);
 }
 
 function changeCityName(event) {
@@ -89,42 +78,70 @@ tempUnit.forEach((temp) => {
     convertTemperature(".temp-value-4", ".unit-4", event);
   });
 });
-function setBackgroundImage(description) {
-  let currentWeatherElement = document.querySelector(".current-weather");
-  currentWeatherElement.style.backgroundRepeat = "no-repeat";
-  currentWeatherElement.style.backgroundPosition = "center";
-  currentWeatherElement.style.backgroundAttachment = "fixed";
-  currentWeatherElement.style.backgroundSize = "cover";
+
+function setBackgroundGradient(description) {
+  let weatherBackgroudGradients = {
+    clear:
+      "linear-gradient(179.1deg, rgb(247, 238, 238) -1.9%, rgb(247, 202, 201) 44.9%, rgb(145, 168, 208) 96.1%)",
+    rain: "linear-gradient(89.4deg, rgb(74, 77, 103) -4.3%, rgb(119, 125, 165) 102.1%)",
+    snow: "radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%)",
+    atmosphere:
+      "radial-gradient(666px at 0.4% 48%, rgb(202, 204, 227) 0%, rgb(89, 89, 99) 97.5%)",
+    clouds:
+      "linear-gradient(109.6deg, rgb(185, 212, 242) 11.2%, rgb(244, 210, 226) 100.3%)",
+  };
+  let bodyElement = document.querySelector("body");
   switch (description.toLowerCase()) {
     case "clouds":
-      currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
+      bodyElement.style.background = weatherBackgroudGradients.clouds;
       break;
     case "rain":
-      currentWeatherElement.style.backgroundImage =
-        "url(../imgs/rainy_day.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.rain;
       break;
     case "clear":
-      currentWeatherElement.style.backgroundImage =
-        "url(../imgs/clearsky_day.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.clear;
       break;
     case "drizzle":
-      currentWeatherElement.style.backgroundImage = "url(../imgs/drizzle.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.rain;
       break;
     case "thunderstorm":
-      currentWeatherElement.style.backgroundImage =
-        "url(../imgs/thunderstorm.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.rain;
       break;
     case "mist":
-      currentWeatherElement.style.backgroundImage =
-        "url(../imgs/atmosphere.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "smoke":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "haze":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "dust":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "sand":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "fog":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "ash":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "squall":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
+      break;
+    case "tornado":
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.atmosphere;
       break;
     case "snow":
-      currentWeatherElement.style.backgroundImage = "url(../imgs/snow.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.snow;
       break;
     default:
-      currentWeatherElement.style.backgroundImage = "url(../imgs/cloudy.jpg)";
+      bodyElement.style.backgroundImage = weatherBackgroudGradients.clear;
   }
 }
+
 function setForecastIcon(description) {
   switch (description.toLowerCase()) {
     case "clouds":
@@ -309,7 +326,7 @@ function showCurrentTemperature(response) {
 
   let broadDescription = response.data.weather[0].main;
 
-  setBackgroundImage(broadDescription);
+  setBackgroundGradient(broadDescription);
 
   getForecast(response.data.coord);
 }

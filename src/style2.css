@@ -1,18 +1,14 @@
-/**
- * Article: https://css-tricks.com/how-to-make-an-area-chart-with-css/
- * More info: https://ChartsCSS.org/
- */
 body {
   display: grid;
   place-items: center;
   margin: 0;
   padding: 1vw;
-  background-color: #fff;
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 footer {
   font-size: small;
   padding-top: 1vw;
+  color: #000;
 }
 .form {
   margin: 2vw 0;
@@ -38,29 +34,31 @@ footer {
 .form-control {
   border-radius: 10px 0 0 10px;
 }
+
 .current-weather {
   position: relative;
   padding: 2vw;
-  border: 1px solid#DEE2E6;
+  /* border: 1px solid#DEE2E6; */
   border-radius: 20px;
-  background: url(../imgs/cloudy.jpg) no-repeat center center fixed;
-  color: #385170;
+  /* background: url(../imgs/cloudy.jpg) no-repeat center center fixed; */
 }
-.current-weather::before {
+/* .current-weather::before {
   content: "";
   position: absolute;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-color: rgba(255, 255, 255, 0.5);
-}
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+} */
 .location,
 .temp-avg,
 .other,
 .hourly-forecast {
   position: relative;
-  color: #385170;
+  /* color: #385170; */
+  color: #163172;
 }
 
 .location i {
@@ -100,7 +98,6 @@ p.weather-mood {
 }
 .hourly-forecast {
   margin-right: 2vw;
-
   padding: 1vw;
   /* border: 1px solid#DEE2E6; */
   /* border-radius: 20px;
@@ -111,79 +108,40 @@ p.weather-mood {
   margin-bottom: 2vw;
   font-size: 1.4vw;
   font-weight: 600;
-  color: #385170;
-}
-.area-chart {
-  /* Reset */
-  margin: 0;
-  padding-bottom: 0vw;
-  border: 0;
-
-  /* Dimensions */
-  width: 100%;
-  max-width: var(--chart-width, 30vw);
-  height: var(--chart-height, 15vw);
-
-  /* Layout */
-  display: flex;
-  justify-content: stretch;
-  align-items: stretch;
-  flex-direction: row;
-}
-ul.area-chart,
-ol.area-chart {
-  list-style: none;
-}
-.area-chart > * {
-  /* Even size items */
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
-
-  /* Color */
-  background: var(--color, rgba(55, 80, 111, 1));
-  clip-path: polygon(
-    0% calc(100% * (1 - var(--start))),
-    100% calc(100% * (1 - var(--end))),
-    100% 100%,
-    0% 100%
-  );
-}
-ul.time-values {
-  list-style: none;
-}
-.time-values li {
-  display: inline;
-  padding: 2vw;
+  color: #163172;
 }
 
 .weather-forecast {
+  position: relative;
   margin-top: 2vw;
   padding: 2vw;
-  border: 1px solid#DEE2E6;
   border-radius: 20px;
-  background: #ececec;
+  color: #163172;
+
+  /* background: #ecececa8; */
+}
+.weather-forecast::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
 }
 .weather-forecast p {
   font-size: 2vw;
 }
 .weather-forecast i {
   font-size: 4vw;
-  color: #385170;
 }
 .weather-forecast-temperature {
   padding-top: 1vw;
   text-align: center;
   font-size: 1.3vw;
 }
-.line-1 {
-  height: 0.2vw;
-  width: 5.5vw;
-  background-color: #000;
-  float: left;
-  margin: 0.8vw 0.1vw;
-  padding: 0px;
-}
+
 .weather-forecast-temperature-min,
 .weather-forecast-temperature-max {
   margin: 0 0.2vw;
@@ -192,4 +150,7 @@ ul.time-values {
 
 .weather-forecast-temperature-max {
   font-weight: 700;
+}
+.github-link {
+  color: #163172;
 }
